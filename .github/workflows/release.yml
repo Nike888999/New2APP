@@ -1,0 +1,46 @@
+name: Build and Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: windows-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Publish application
+        run: dotnet publish NewAPP2.csproj -c Release -r win-x64 --self-contained -o ./publish
+
+      - name: Install Velopack
+        run: dotnet tool install -g vpk
+
+      - name: Download previous release (if exists)
+        run: |
+          vpk download github --repoUrl https://github.com/${{ github.repository }}
+        continue-on-error: true
+
+      - name: Create Velopack release
+        shell: pwsh
+        run: |
+          $VERSION = "${{ github.ref_name }}".TrimStart('v')
+          Write-Host "Version: $VERSION"
+          vpk pack -u NewAPP2 -v $VERSION -p ./publish --mainExe NewAPP2.exe
+
+      - name: Upload to GitHub Release
+        shell: pwsh
+        run: |
+          $VERSION = "${{ github.ref_name }}".TrimStart('v')
+          vpk upload github --repoUrl https://github.com/${{ github.repository }} --token ${{ secrets.GH_TOKEN }} --publish --releaseName "v$VERSION"
