@@ -231,7 +231,7 @@
                     <Button Content="🔄ОБНОВЛЕНИЕ"
                              Command="{Binding UpgradeCommand}"
                              Width="150"
-                             Background="{StaticResource GrayGradient}"
+                             Background="{StaticResource DarkGrayBrush}"
                              Foreground="White"
                              FontWeight="Bold"
                              Margin="5,0"/>
