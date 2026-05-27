@@ -230,7 +230,7 @@
                             Margin="5,0"/>
                     <Button Content="🔄ОБНОВЛЕНИЕ"
                              Command="{Binding UpgradeCommand}"
-                             Width="50"
+                             Width="150"
                              Background="#FF00008B"
                              Foreground="White"
                              FontWeight="Bold"
