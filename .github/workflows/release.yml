@@ -29,7 +29,7 @@ jobs:
 
       - name: Download previous release (if exists)
         run: |
-          vpk download github --repoUrl https://github.com/Nike888999/New2APP
+          vpk download github --repoUrl https://github.com/Nike888999/New2APP --token ${{ secrets.GH_TOKEN }}
         continue-on-error: true
 
       - name: Create Velopack release
@@ -42,4 +42,4 @@ jobs:
         shell: pwsh
         run: |
           $VERSION = "${{ github.ref_name }}".TrimStart('v')
-          vpk upload github --repoUrl https://github.com/Nike888999/New2APP --publish --releaseName "v$VERSION" -y
+          vpk upload github --repoUrl https://github.com/Nike888999/New2APP --token ${{ secrets.GH_TOKEN }} --publish --releaseName "v$VERSION" -y
