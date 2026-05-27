@@ -21,6 +21,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
 using Velopack;
+using Velopack.Sources;
 
 
 namespace NewAPP
@@ -365,24 +366,52 @@ namespace NewAPP
 
         private async void ExecuteUpgradeCommand(object param )
         {
-            // MessageBox.Show("нового обновления нема внатуре!");
-            var updateManager = new UpdateManager(@"C:\Users\a.beskrovnyy\Desktop\update");
-
-            var newVersion = await updateManager.CheckForUpdatesAsync();
-
-            if (newVersion == null)
+            try
             {
-                MessageBox.Show("У Вас последняя версия");
-                return;
+                // Создаём менеджер обновлений, указывая на GitHub репозиторий
+                var updateManager = new UpdateManager(
+                    new GithubSource(
+                        repoUrl: "https://github.com/Nike888999/New2APP",
+                        accessToken: null,        // для публичного репозитория токен не нужен
+                        prerelease: false
+                    )
+                );
+
+                // Проверяем наличие новой версии
+                var newVersion = await updateManager.CheckForUpdatesAsync();
+
+                if (newVersion == null)
+                {
+                    MessageBox.Show("У Вас последняя версия", "Обновление",
+                        MessageBoxButton.OK, MessageBoxImage.Information);
+                    return;
+                }
+
+                // Спрашиваем пользователя
+                var result = MessageBox.Show(
+                    $"Доступна новая версия {newVersion.TargetFullRelease.Version}!\n\n" +
+                    $"Текущая версия: {updateManager.CurrentVersion?.ToString() ?? "Неизвестно"}\n\n" +
+                    "Обновить сейчас?",
+                    "Доступно обновление",
+                    MessageBoxButton.YesNo,
+                    MessageBoxImage.Question);
+
+                if (result == MessageBoxResult.Yes)
+                {
+                    // Показываем прогресс (опционально)
+                    //StatusText = "Загрузка обновления...";
+
+                    // Скачиваем обновление
+                    await updateManager.DownloadUpdatesAsync(newVersion);
+
+                    // Применяем и перезапускаем
+                    updateManager.ApplyUpdatesAndRestart(newVersion);
+                }
             }
-
-            var result = MessageBox.Show($"Доступна новая версия {newVersion.TargetFullRelease.Version}!\nОбновить сейчас?",
-                                          "Обновление", MessageBoxButton.YesNo, MessageBoxImage.Question);
-
-            if (result == MessageBoxResult.Yes)
+            catch (Exception ex)
             {
-                await updateManager.DownloadUpdatesAsync(newVersion);
-                updateManager.ApplyUpdatesAndRestart(newVersion);
+                MessageBox.Show($"Ошибка при проверке обновлений: {ex.Message}",
+                    "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
