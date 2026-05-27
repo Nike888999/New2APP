@@ -1,0 +1,100 @@
+﻿<Window x:Class="NewAPP.View.TestWeightWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:NewAPP.View"
+        mc:Ignorable="d"
+        Title="TestWeightWindow" Height="450" Width="800">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Отображение веса - убираем DataGrid, оставляем только TextBlock -->
+        <Border Grid.Row="1" Grid.Column="1" 
+            Background="#2C3E50" 
+            CornerRadius="15" 
+            Padding="40"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center">
+
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                <TextBlock Text="ТЕКУЩИЙ ВЕС" 
+                       FontSize="14" 
+                       Foreground="#888888"
+                       HorizontalAlignment="Center"/>
+
+                <!-- Привязываем вес к свойству Weight -->
+                <TextBlock x:Name="WeightText"
+                       Text="{Binding Weight, UpdateSourceTrigger=PropertyChanged}" 
+                       FontSize="80" 
+                       FontWeight="Bold" 
+                       Foreground="#F1C40F"
+                       HorizontalAlignment="Center"
+                       Margin="0,20,0,10"/>
+
+                <TextBlock x:Name="UnitText"
+                       Text="грамм" 
+                       FontSize="16" 
+                       Foreground="#888888"
+                       HorizontalAlignment="Center"/>
+            </StackPanel>
+        </Border>
+
+        <!-- Кнопка старт -->
+        <StackPanel Grid.Row="2" Grid.Column="2" Margin="20">
+            <Button x:Name="ButtonStart" 
+                Click="Start_Click"
+                Width="120" 
+                Height="50" 
+                Content="СТАРТ"
+                Background="#27AE60"
+                Foreground="White"
+                FontSize="16"
+                FontWeight="Bold"
+                Cursor="Hand"/>
+        </StackPanel>
+        <StackPanel Grid.Row="0" Grid.Column="2">
+            <ComboBox Grid.Row="2" x:Name="ComboName"
+                  
+                  DisplayMemberPath="Name"
+                  SelectedValuePath="Name"
+                  SelectedValue="{Binding SelectedNomenclature, UpdateSourceTrigger=PropertyChanged}"
+                  
+                  Width="130"
+                  Height="24"
+                  Margin="5,2"
+                  FontSize="10"
+                  Background="#34495E"
+                  Foreground="Black"
+                  BorderBrush="#4A6572"/>
+
+        </StackPanel>
+        <StackPanel>
+            <TextBlock Text="Вес единицы товара"/>
+            <TextBox x:Name="WeightTextBox" Height="50" Width="100" Margin="10, 10, 10, 10"/>
+        </StackPanel>
+        <StackPanel Grid.Row="2" Grid.Column="1">
+            <Button x:Name="ButtonDeleteUnit" 
+     Click="Delete_Click"
+     Width="120" 
+     Height="50" 
+     Content="УДАЛИТЬ"
+     Background="#27AE60"
+     Foreground="White"
+     FontSize="16"
+     FontWeight="Bold"
+     Cursor="Hand"
+     Margin="0,20, 0,0"/>
+        </StackPanel>
+    </Grid>
+</Window>
