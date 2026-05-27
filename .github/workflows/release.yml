@@ -37,4 +37,4 @@ jobs:
         shell: pwsh
         run: |
           $VERSION = "${{ github.ref_name }}".TrimStart('v')
-          vpk upload github --repoUrl https://github.com/${{ github.repository }} --publish --releaseName "v$VERSION"
+          vpk upload github --repoUrl https://github.com/${{ github.repository }} --token ${{ secrets.GH_TOKEN }} --publish --releaseName "v$VERSION"
