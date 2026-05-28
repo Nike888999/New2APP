@@ -324,7 +324,7 @@
                             Visibility="{Binding NavigationVM.IsVisibleSklad,Converter={StaticResource BooleanToVisibilityConverter}}"/>
                     <Button Content="ЖУРНАЛ СОБЫТИЙ" 
                             Style="{StaticResource LeftButtonStyle}"
-                            Command="{Binding ExecuteLogger}" 
+                            Command="{Binding LoggerCommand}" 
                             Background="{StaticResource LightGreenBrush}"
                             Visibility="{Binding NavigationVM.IsVisibleSklad,Converter={StaticResource BooleanToVisibilityConverter}}"/>
                 </StackPanel>
