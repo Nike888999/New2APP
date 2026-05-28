@@ -322,7 +322,7 @@
                             Command="{Binding SensorsVM.SetingSklad}" 
                             Background="{StaticResource LightGreenBrush}"
                             Visibility="{Binding NavigationVM.IsVisibleSklad,Converter={StaticResource BooleanToVisibilityConverter}}"/>
-                    <Button Content="ЖУРНАЛ СОБЫТИЙ новый" 
+                    <Button Content="ЖУРНАЛ СОБЫТИЙ" 
                             Style="{StaticResource LeftButtonStyle}"
                             Command="{Binding ExecuteLogger}" 
                             Background="{StaticResource LightGreenBrush}"
