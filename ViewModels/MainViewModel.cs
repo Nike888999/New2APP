@@ -275,6 +275,8 @@ namespace NewAPP
         public ICommand OpenTestWindow {  get; } //открытие окна тестового
         public ICommand ApplyHotkeysCommand { get; }
         public ICommand UpgradeCommand { get; } //обновление
+        public ICommand LoggerCommand { get; }//журнал логов
+
 
 
 
@@ -315,6 +317,7 @@ namespace NewAPP
                 UpgradeCommand = new RelayCommand(ExecuteUpgradeCommand);
                  OpenTestWindow = new RelayCommand(ExecuteOpenTestWindow); //реализация команды открытия тестового окна
                 ApplyHotkeysCommand = new RelayCommand(ExecuteApplyHotkeys);
+                LoggerCommand = new RelayCommand(ExecuteLogger);
 
         //        AvailableActions = new ObservableCollection<ActionItem>
         //{
@@ -325,8 +328,8 @@ namespace NewAPP
         //    new ActionItem { Name = "Отчет", Command = ExceleOtchet },
         //    new ActionItem { Name = "Отчет", Command = ExceleOtchet }
 
-        //};
-                
+                //};
+
             }
             catch (Exception ex)
             {
@@ -362,6 +365,11 @@ namespace NewAPP
 
             }
 
+        }
+
+        private void ExecuteLogger (object param )
+        {
+            MessageBox.Show("События");
         }
 
         private async void ExecuteUpgradeCommand(object param )
