@@ -8,7 +8,12 @@
     <UseWPF>true</UseWPF>
 	  <StartupObject>NewAPP.App</StartupObject>
 	  <AssemblyName>Neurowarehouse</AssemblyName>
+	  <ApplicationIcon>warehouse.ico</ApplicationIcon>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="warehouse.ico" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="EPPlus" Version="8.5.0" />
