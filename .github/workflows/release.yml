@@ -45,7 +45,7 @@ jobs:
         shell: pwsh
         run: |
           $VERSION = "${{ github.ref_name }}".TrimStart('v')
-          vpk pack -u NewAPP2 -v $VERSION -p ./publish --mainExe NewAPP2.exe
+          vpk pack -u NewAPP2 -v $VERSION -p ./publish --mainExe Neurowarehouse.exe
 
       - name: Upload to GitHub Release
         shell: pwsh
