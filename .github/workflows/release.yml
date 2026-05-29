@@ -1,0 +1,54 @@
+name: Build and Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: windows-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Delete existing release and tag (if exists)
+        uses: dev-drprasad/delete-tag-and-release@v1.1
+        with:
+          tag_name: ${{ github.ref_name }}
+          delete_release: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+        continue-on-error: true
+
+      - name: Publish application
+        run: dotnet publish NewAPP2.csproj -c Release -r win-x64 --self-contained -o ./publish
+
+      - name: Install Velopack
+        run: dotnet tool install -g vpk
+
+      - name: Download previous release (if exists)
+        run: |
+          vpk download github --repoUrl https://github.com/Nike888999/Neurowarehouse --token ${{ secrets.GH_TOKEN }}
+        continue-on-error: true
+
+      - name: Create Velopack release
+        shell: pwsh
+        run: |
+          $VERSION = "${{ github.ref_name }}".TrimStart('v')
+          vpk pack -u NewAPP2 -v $VERSION -p ./publish --mainExe Neurowarehouse.exe
+
+      - name: Upload to GitHub Release
+        shell: pwsh
+        run: |
+          $VERSION = "${{ github.ref_name }}".TrimStart('v')
+          vpk upload github --repoUrl https://github.com/Nike888999/Neurowarehouse --token ${{ secrets.GH_TOKEN }} --publish --releaseName "v$VERSION" -y
