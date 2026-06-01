@@ -229,7 +229,7 @@
                             Foreground="White"
                             FontWeight="Bold"
                             Margin="5,0"/>
-                    <Button Content="🔄ОБНОВИТЬ ПРОГРАММУ"
+                    <Button Content="🔄ОБНОВИТЬ"
                              Command="{Binding UpgradeCommand}"
                              Width="150"
                              Background="{StaticResource DarkGrayBrush}"
