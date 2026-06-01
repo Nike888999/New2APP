@@ -1479,6 +1479,9 @@
                 <TextBlock Text="{Binding SensorsVM.StatusText}" 
                          Foreground="{StaticResource WhiteBrush}"
                          VerticalAlignment="Center"/>
+                <TextBlock Text="{Binding VersionApp}" 
+                         Foreground="{StaticResource WhiteBrush}"
+                         VerticalAlignment="Bottom" HorizontalAlignment="Center"/>
 
                 <StackPanel Grid.Column="1" Orientation="Horizontal">
                     <TextBlock Text="Роль: "

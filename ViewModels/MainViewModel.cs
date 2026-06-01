@@ -12,6 +12,7 @@ using System.ComponentModel;
 using System.Data;
 using System.DirectoryServices;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Security.Cryptography.X509Certificates;
 using System.Windows;
@@ -264,6 +265,17 @@ namespace NewAPP
 
         private readonly IServiceProvider _serviceProvider;
 
+        private string versionApp; //актуальная версия программы 
+        public string VersionApp 
+        {
+            get => versionApp;
+            set
+            {
+                versionApp = value;
+                OnPropertyChanged();
+            }
+        }
+
         // ===== КОМАНДЫ =====
         public ICommand ZeroPointCommand { get; }
         public ICommand EtalonPointCommand { get; }
@@ -319,14 +331,23 @@ namespace NewAPP
                 ApplyHotkeysCommand = new RelayCommand(ExecuteApplyHotkeys);
                 LoggerCommand = new RelayCommand(ExecuteLogger);
 
-        //        AvailableActions = new ObservableCollection<ActionItem>
-        //{
-        //    new ActionItem { Name = "Добавить номенклатуру", Command = AddNomenclatureButton },
-        //    new ActionItem { Name = "Отчет", Command = ExceleOtchet },
-        //    new ActionItem { Name = "Удалить номенклатуру", Command = DeleteCommand },
-        //    new ActionItem { Name = "Настройка склада", Command = SetingSklad },
-        //    new ActionItem { Name = "Отчет", Command = ExceleOtchet },
-        //    new ActionItem { Name = "Отчет", Command = ExceleOtchet }
+                //var updateManager = new UpdateManager("https://github.com/Nike888999/New2APP");
+                //var currentVersion = updateManager.CurrentVersion;
+                //VersionApp = $"Версия: {currentVersion}";
+
+                //var version = Assembly.GetExecutingAssembly().GetName().Version;
+                //VersionApp = $"Версия: {version.Major}.{version.Minor}.{version.Build}";
+
+                _=LoadLatestVersionAsync();   
+
+                //        AvailableActions = new ObservableCollection<ActionItem>
+                //{
+                //    new ActionItem { Name = "Добавить номенклатуру", Command = AddNomenclatureButton },
+                //    new ActionItem { Name = "Отчет", Command = ExceleOtchet },
+                //    new ActionItem { Name = "Удалить номенклатуру", Command = DeleteCommand },
+                //    new ActionItem { Name = "Настройка склада", Command = SetingSklad },
+                //    new ActionItem { Name = "Отчет", Command = ExceleOtchet },
+                //    new ActionItem { Name = "Отчет", Command = ExceleOtchet }
 
                 //};
 
@@ -334,6 +355,47 @@ namespace NewAPP
             catch (Exception ex)
             {
                 //StatusText = $"Ошибка инициализации: {ex.Message}";
+            }
+        }
+
+        private async Task LoadLatestVersionAsync ( )
+        {
+            try
+            {
+                // 1. Создаём менеджер обновлений
+                var updateManager = new UpdateManager(
+                    new GithubSource(
+                        repoUrl: "https://github.com/Nike888999/New2APP",
+                        accessToken: null,
+                        prerelease: false
+                    )
+                );
+
+                // 2. Проверяем наличие обновлений
+                //    Этот запрос может занять некоторое время, так как обращается к GitHub API
+                var newVersion = await updateManager.CheckForUpdatesAsync();
+
+                // 3. Обрабатываем результат
+                if (newVersion != null)
+                {
+                    // Если есть новая версия (т.е. на GitHub есть релиз новее, чем установленный)
+                    VersionApp = $"Актуальная версия: {newVersion.TargetFullRelease.Version}";
+                }
+                else
+                {
+                    // Если новой версии нет, пробуем получить текущую версию из менеджера
+                    // Важно: CurrentVersion может быть null, если приложение было запущено не через установщик Velopack
+                    var currentVersion = updateManager.CurrentVersion;
+                    VersionApp = currentVersion != null
+                        ? $"Актуальная версия: {currentVersion}"
+                        : "Актуальная версия: не удалось определить";
+                }
+            }
+            catch (Exception ex)
+            {
+                // Если произошла ошибка (нет интернета, проблемы с API GitHub и т.д.), показываем её суть
+                VersionApp = $"Ошибка: {ex.Message}";
+                
             }
         }
 
