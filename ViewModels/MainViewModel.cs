@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+
 using NewAPP.Models;
 using NewAPP.Services;
 using NewAPP.View;
@@ -37,7 +38,9 @@ namespace NewAPP
         private readonly ICalibration _calibration;
         private readonly IDataBaseService _dataBase;
         private readonly IExcele _excele;
-       
+        
+
+
         private List<NomenclatureUnit> allItems;
         public TerminalViewModel TerminalVM { get; set; }
         public NavigationViewModel NavigationVM { get; set; }
@@ -294,7 +297,7 @@ namespace NewAPP
 
 
         // ===== КОНСТРУКТОР =====
-        public MainViewModel ( IModbusTCPService modbusService, IDataBaseService dataBase, ICalibration calibration, IServiceProvider serviceProvider, IExcele excele )
+        public MainViewModel ( IModbusTCPService modbusService, IDataBaseService dataBase, ICalibration calibration, IServiceProvider serviceProvider, IExcele excele)
         {
             try
             {
@@ -306,6 +309,7 @@ namespace NewAPP
                 _dataBase = dataBase; // создание экземпляра базы данных
                 _serviceProvider = serviceProvider;
                 _excele = excele;
+                
 
                 NavigationVM = new NavigationViewModel();
                 NavigationVM.PropertyChanged += ( s, e ) => OnPropertyChanged(e.PropertyName);
@@ -317,7 +321,7 @@ namespace NewAPP
 
                 TerminalVM = new TerminalViewModel(_dataBase, _modbusService);
                 TerminalVM.PropertyChanged += TerminalVM_PropertyChanged;
-
+                
 
                 LoadlNum = new ObservableCollection<NomenclatureUnit>(_dataBase.AllNum());
                 AllNomenclatureUnits = _dataBase.AllNum();

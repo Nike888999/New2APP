@@ -22,30 +22,8 @@ namespace NewAPP.Services
                         client.Connect(ip, port);
                         using (NetworkStream stream = client.GetStream())
                         {
-                            byte[] remote = new byte[]
-                            {
-                                        0x00, 0x01, 0x00, 0x00, 0x00, 0x06, 0x01, 0x10,
-                                        0x27, 0x23, 0x00, 0x01, 0x02, 0x00, 0x01
-                            };
-                            stream.Write(remote, 0, remote.Length);
-                            stream.Read(new byte[64], 0, 64);
-
-                            byte[] select = new byte[]
-                                {
-                                0x00, 0x02, 0x00, 0x00, 0x00, 0x06, 0x01, 0x10,
-                                0x27, 0x12, 0x00, 0x01, 0x02, 0x00, terminalAddress
-                                };
-                            stream.Write(select, 0, select.Length);
-                            stream.Read(new byte[64], 0, 64);
-
-                            byte[] zero = new byte[]
-                                {
-                                0x00, 0x03, 0x00, 0x00, 0x00, 0x06, 0x01, 0x10,
-                                0x27, 0x21, 0x00, 0x01, 0x02, 0x00, 0x01
-                                };
-                            stream.Write(zero, 0, zero.Length);
-                            stream.Read(new byte[64], 0, 64);
                             
+                            //заглушка
                         }
                         
                     }
@@ -75,52 +53,8 @@ namespace NewAPP.Services
                         client.Connect(ip, port);
                         using (NetworkStream stream = client.GetStream())
                         {
-                            byte[] remote = new byte[]
-                            {
-                                        0x00, 0x01, 0x00, 0x00, 0x00, 0x06, 0x01, 0x10,
-                                        0x27, 0x23, 0x00, 0x01, 0x02, 0x00, 0x01
-                            };
-                            stream.Write(remote, 0, remote.Length);
-                            stream.Read(new byte[64], 0, 64);
-
-                            byte[] select = new byte[]
-                                {
-                                0x00, 0x02, 0x00, 0x00, 0x00, 0x06, 0x01, 0x10,
-                                0x27, 0x12, 0x00, 0x01, 0x02, 0x00, terminalAddress
-                                };
-                            stream.Write(select, 0, select.Length);
-                            stream.Read(new byte[64], 0, 64);
-
-                            byte[] zero = new byte[]
-                                {
-                                0x00, 0x03, 0x00, 0x00, 0x00, 0x06, 0x01, 0x10,
-                                0x27, 0x21, 0x00, 0x01, 0x02, 0x00, 0x01
-                                };
-                            stream.Write(zero, 0, zero.Length);
-                            stream.Read(new byte[64], 0, 64);
-
-                            byte[] weightBytes = BitConverter.GetBytes(Weight);
-                            if (BitConverter.IsLittleEndian) Array.Reverse(weightBytes);
-
-                            // ========== 5. Запись веса эталона в 10003 ==========
-                            byte[] setWeight = new byte[]
-                            {
-                                0x00, 0x04, 0x00, 0x00, 0x00, 0x08, 0x01, 0x10,
-                                0x27, 0x13, 0x00, 0x02, 0x04,
-                                weightBytes[0], weightBytes[1], weightBytes[2], weightBytes[3]
-                            };
-                            stream.Write(setWeight, 0, setWeight.Length);
-                            stream.Read(new byte[64], 0, 64);
-
-
-                            // ========== 6. Команда калибровки количества ==========
-                            byte[] calibrate = new byte[]
-                            {
-        0x00, 0x05, 0x00, 0x00, 0x00, 0x06, 0x01, 0x10,
-        0x27, 0x21, 0x00, 0x01, 0x02, 0x00, 0x02
-                            };
-                            stream.Write(calibrate, 0, calibrate.Length);
-                            stream.Read(new byte[64], 0, 64);
+                            
+                           //заглушка
                         }
 
                     }

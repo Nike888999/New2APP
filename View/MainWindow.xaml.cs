@@ -1,4 +1,5 @@
-﻿using NewAPP.Models;
+﻿
+using NewAPP.Models;
 using NewAPP.Services;
 using NewAPP2.Interface;
 using NewAPP2.ViewModels;
@@ -41,6 +42,8 @@ namespace NewAPP.View
             //this.Closed += ( s, e ) => _viewModel.Cleanup();
             _viewModel.PropertyChanged += OnViewModelPropertyChanger;
         }
+
+
 
         // Только специфичные для окна обработчики
         private void Window_PreviewKeyDown ( object sender, KeyEventArgs e )

@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
+
 using NewAPP;
 using NewAPP.Models;
 using NewAPP.Services;
@@ -334,6 +335,7 @@ namespace NewAPP2.ViewModels
             _serviceProvider = serviceProvider;
             //_user = user;
             _excele = excele;
+            
 
             AddNomenclatureButton = new RelayCommand(ExecuteAddNomenclature);
             DeleteCommand = new RelayCommand(ExecuteDeleteCommand);

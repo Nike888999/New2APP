@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace NewAPP2.Interface
 {
-    public interface IModbusTCPService
+    public interface IModbusTCPService //для заглушки
     {
         public Task<int> ReadWeightAsync ( string ip, int port, byte unitId, ushort registerAddress );
         public Task<bool> TestConnectionAsync ( string ip, int port );
