@@ -240,7 +240,7 @@
 
                 <!-- Центральные кнопки -->
                 <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center">
-                    <Button Content="GMT X1" Command="{Binding OpenTestWindow}" Style="{StaticResource TopButtonStyle}" Width="120"/>
+                    <Button Content="X1" Command="{Binding OpenTestWindow}" Style="{StaticResource TopButtonStyle}" Width="120"/>
                     <Button x:Name="DBopen" Command ="{Binding OpenComand}" Content="{Binding ButtonContent}" Style="{StaticResource TopButtonStyle}" Width="120"/>
                    
                 </StackPanel>
